@@ -3,5 +3,3 @@ pauAge <-76
 
 addAge = renzAge + pauAge
 addAge
-
-
