@@ -4,11 +4,4 @@ pauAge <-76
 addAge = renzAge + pauAge
 addAge
 
-mulAge = renzAge * pauAge
-mulAge
 
-subAge = renzAge - pauAge
-subAge
-
-divAge = renzAge / pauAge
-divAge
