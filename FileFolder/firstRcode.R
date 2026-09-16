@@ -9,3 +9,6 @@ mulAge
 
 subAge = renzAge - pauAge
 subAge
+
+divAge = renzAge / pauAge
+divAge
