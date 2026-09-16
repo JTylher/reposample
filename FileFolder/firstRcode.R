@@ -6,3 +6,6 @@ addAge
 
 mulAge = renzAge * pauAge
 mulAge
+
+subAge = renzAge - pauAge
+subAge
