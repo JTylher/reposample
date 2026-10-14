@@ -124,15 +124,15 @@ as.numeric(bad_string)
 
 ```
 
-# Question #5: When you ran the conversion-fail chunk, R produced NA and a warning instead of stopping with an error.
+# Question (5): When you ran the conversion-fail chunk, R produced NA and a warning instead of stopping with an error.
 # Why do you think R is designed to give a warning here rather than crashing the whole script?
 
 # Answer number 5: This design prevents minor conversion errors from crashing the entire program, allowing the script to finish processing the valid data.
 
-# Question #6: as.logical(0) and as.logical(1) convert to FALSE and TRUE.
+# Question (6): as.logical(0) and as.logical(1) convert to FALSE and TRUE.
 # What do you think as.logical(2) and as.logical(-1)` will produce?
 
-# Answer number 6: TRUE
+# Answer(6): TRUE
 
 ```{r}
 as.logical(2)
@@ -175,14 +175,15 @@ age <- 21
 paste0(full_name, " is ", age, " years old.")
 ```
 
-# Question #7: paste() and paste0() produced different results for the same two strings. Explain exactly why, referencing what each function does by default.
+# Question (7): paste() and paste0() produced different results for the same two strings. Explain exactly why, referencing what each function does by default.
 
-# Answer number 7: paste() has a default space between strings, while paste0() doesn't have space so it directly connects strings.
+# Answer (7): paste() has a default space while paste0() doesn't have space so it directly connects strings.
 
-# Question #8: In the strings-numbers chunk, you combined a character string with a numeric variable (age) using paste0() without first converting age to a string.
+# Question (8): In the strings-numbers chunk, you combined a character string with a numeric variable (age) using paste0() without first converting age to a string.
 # Did this cause an error? Explain what paste0() does internally to make this work, and how it relates to the type conversions you practiced in Part C.
 
-# Answer number 8: No, it did not cause an error because paste0() automatically converts numbers into character strings behind the scenes. This automatic process is called implicit coercion, which performs the exact same type conversion you did manually in Part C using as.character().
+# Answer number 8: No,errors because paste0() automatically converts numbers into character strings. The process is called implicit coercion which performs the exact same type conversion you did manually in Part C using as.character().
+
 
 
 ### Part E — Critical Thinking Challenge
@@ -200,18 +201,17 @@ paste0(full_name, " is ", age, " years old.")
 as.numeric("5") + 5
 ```
 
-# Question #9: Some programming languages automatically convert "5" + 5 into 10 without an error. R does not.
+# Question (9): Some programming languages automatically convert "5" + 5 into 10 without an error. R does not.
 # Based on what you’ve learned about R’s data types in this lab, why do you think R requires an explicit conversion instead of guessing what the programmer meant?
 
-# Answer number 9: R forces us to convert types explicitly to prevent silent mistakes. If R tried to guess what we meant, it might accidentally glue the data together as text (like making "55") or change it into the wrong number without telling us. Error means you find the mistakes immediately before they mess up our math or statistics.
+# Answer (9): In order to prevent silent mistakes, R makes you convert types yourself. It won't guess what you mean, because a wrong guess could quietly turn numbers into text (like "55") or misread values. That way, mistakes show up immediately instead of silently messing up your math or statistics later.
 
-# Question #10: Suppose a classmate writes a script that reads a column of “numbers” from a text file. The column looks numeric, but when they try sum() on it, R throws an error. Based on everything in this lab (types, typeof()/class()/mode(), conversion, warnings), write a short paragraph explaining what likely went wrong and the steps you’d take to diagnose and fix it.
+# Question (10): Suppose a classmate writes a script that reads a column of “numbers” from a text file. The column looks numeric, but when they try sum() on it, R throws an error. Based on everything in this lab (types, typeof()/class()/mode(), conversion, warnings), write a short paragraph explaining what likely went wrong and the steps you’d take to diagnose and fix it.
 
-# Answer number 10: To fix this, check the data type using class(data$column), find and remove the text typos, and then use as.numeric() to convert the column back into numbers so sum() can work.
+# Answer number 10: To fix, Using class(data$column) to check the data type , find and remove the text typos, and then use as.numeric() to convert the column back into numbers so sum() can work.
 
 
 
 ### CONCLUSION
-# This activity covers R's arithmetic operations, basic data types, type conversions, and string manipulation techniques. You will practice using standard mathematical operators, explore how R stores different kinds of data using functions like typeof() and class(), and learn how to safely coerce values between types. The exercises also emphasize how R's strict type enforcement and how to handle warnings and errors during data analysis.
 
-
+# This activity covers how to do math in R, the basic kinds of data it uses, how to change one data type into another, and how to work with text.The exercises show and how to deal with warnings and errors that pop up while analyzing data. Also you will learn doing math with R’s standard operators, check how it stores different kinds of data using functions like typeof() and class(), and learn how to safely convert values from one type to another.
