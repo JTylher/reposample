@@ -1,0 +1,59 @@
+---
+title: "Rexercise#7_Divinagracia"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+###R Lab: Data Structures - Data Frames
+
+#Part A — Creating Data Frames
+#Question(1)
+```{r}
+# TODO: Before combining these into a data frame, confirm all six vectors
+# have the same length using length() on each one (or wrap them in c()
+# and check for yourself that every value is 20)
+```
+```{r}
+# TODO: Combine all six vectors into a data frame called survey using
+# data.frame(), naming the columns: Respondent, Sex, FathersOccupation,
+# PersonsAtHome, SiblingsAtSchool, TypesOfHouses
+# Print the resulting data frame
+```
+#a.Describe the data. Get the structure or the summary of the data.
+#Answer:
+#b.Check for the dimensions. How many rows and columns?
+#Answer:
+#c.Create factors for Sex, Father's Occupation and Types of Houses
+#Answer:
+#d.Get the mean for all columns.
+#Answer:
+#e.Extract the 1st five rows and then all the columns using subsetting functions. What is the output?
+#Answer:
+#f.Select the variable types of houses then store the vector that results as types_houses.
+#Answer:
+#g.Select only all Males respondent that their father occupation was farmer.
+#Answer:
+#h.Select only all females respondent that have greater than or equal to 5 number of siblings attending school.
+#Answer:
+
+
+###Question (2)
+#Answer:
+
+
+###Question (3)
+#Answer:
+
+###Question (4)
+#Answer:
+
+###Question (5)
+#Answer:
+
+###Question (6)
+#Answer:
+
+###Question (7)
+#Answer:
