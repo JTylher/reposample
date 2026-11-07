@@ -3,3 +3,165 @@ title: "Rexercise#6_Divinagracia"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### R Lab: Data Structures - Data Frames
+
+#Part A — Creating Data Frames
+```{r}
+# TODO: Create three vectors of equal length (5 students):
+# name (character): "Ana", "Ben", "Cid", "Dex", "Eli"
+# age (numeric): 20, 21, 19, 22, 20
+# passed (logical): TRUE, TRUE, FALSE, TRUE, FALSE
+
+name   <- c("Ana", "Ben", "Cid", "Dex", "Eli")
+age    <- c(20, 21, 19, 22, 20)
+passed <- c(TRUE, TRUE, FALSE, TRUE, FALSE)
+```
+
+```{r}
+# TODO: Combine name, age, and passed into a data frame called students
+# using data.frame(name = name, age = age, passed = passed)
+# Print students
+students <- data.frame(name = name, age = age, passed = passed)
+print(students)
+```
+```{r}
+# TODO: Check the type of the "name" column using typeof(students$name)
+# and class(students$name)
+typeof(students$name)
+class(students$name)
+```
+```{r}
+# TODO: Now create a SECOND data frame called courses directly, without
+# separate vectors first, using data.frame() with these columns:
+# course_code = c("IS101", "IS102", "IS103")
+# units = c(3, 3, 2)
+# instructor = c("Dr. P. Reyes", "Dr. R. Santos", "Dr. S. Cruz")
+courses <- data.frame(
+  course_code = c("IS101", "IS102", "IS103"),
+  units = c(3, 3, 2),
+  instructor = c("Dr. P. Reyes", "Dr. R. Santos", "Dr. S. Cruz")
+)
+print(courses)
+```
+#Question (1)
+#Answer: data.frame() requires columns of equal length because it forms a strict grid or table where every row must have an entry for every column. If the lengths don't match, the table breaks because it leaves uneven, empty spaces. If you try to mix different lengths, R will throw an error saying "arguments imply differing number of rows" because it doesn't know how to fill the missing data points.
+#Question (2)
+#Answer: This description makes sense because a list is allowed to hold different types of objects, but an individual vector can only hold one. Since a data frame is actually a list, each column is a separate vector, meaning one column can be text while another is numeric. However, because each individual column is a vector, the data inside that single column must strictly share the exact same type.
+
+#Part B — Subsetting Data Frames
+```{r}
+# TODO: Access the "age" column of students three different ways:
+# students$age
+# students[["age"]]
+# students["age"]  -- note: compare the output/class of this one to the others
+students$age
+students[["age"]]
+students["age"]
+```
+```{r}
+# TODO: Access the entire 2nd row of students using students[2, ]
+students[2, ]
+```
+```{r}
+# TODO: Access the value in row 3, column "name" using students[3, "name"]
+students[3, "name"]
+```
+```{r}
+# TODO: Return only the rows of students where passed is TRUE
+# Hint: students[students$passed == TRUE, ]
+students[students$passed == TRUE, ]
+```
+```{r}
+# TODO: Return only the rows of students where passed is TRUE AND
+# age is greater than 19. Use the & operator to combine both conditions.
+students[students$passed == TRUE & students$age > 19, ]
+```
+### Question(3)
+#Answer:Running class() shows that students["age"] is a data.frame, while students$age is a numeric vector. This happens because a data frame is a list of columns under the hood. Single brackets ["age"] act like a list slice, keeping the table structure intact as a smaller data frame, whereas the dollar sign $age (just like double brackets) drills inside to extract the raw vector data itself.
+
+### Question(4)
+#Answer:The & operator compares the two logical vectors row-by-row and only returns TRUE if both conditions are met at the same time. It acts as a strict filter, meaning a student must have passed and be older than 19 to show up in the results. If you switched to the | (OR) operator, R would return TRUE if a student met either one of the conditions, which would loosen the filter and include more students (like Eli, who failed but is included simply because he is 20 years old).
+
+#Part C — Data Frame Properties
+```{r}
+# TODO: Use str() on students to see the structure and types of each column
+str(students)
+```
+```{r}
+# TODO: Use dim(), nrow(), and ncol() on students to report its size
+dim(students)
+nrow(students)
+ncol(students)
+```
+```{r}
+# TODO: Use names() (or colnames()) to list the column names of students
+names(students)
+colnames(students)
+```
+```{r}
+# TODO: Use summary() on students to get summary statistics for each column
+summary(students)
+```
+
+###Question (5)
+#Answer:For numeric columns like age, summary() calculates statistical metrics like the minimum, median, mean, and maximum, while for logical columns like passed, it simply counts the total number of TRUE and FALSE values. For character columns like name, it only reports basic metadata like the column's length and class. Calculating a "mean" or average does not make sense for the name column because text data has no mathematical value, making it impossible to add names together or divide them numerically.
+
+###Question (6)
+#Answer:The str() function is more useful when you need to inspect the technical structure, dimensions, and exact data types of a dataset to ensure your columns are formatted correctly for coding. On the other hand, summary() is more useful when you want to quickly analyze the actual distribution and statistical overview of your data values. Essentially, use str() to check how your data frame is built, and use summary() to see what your data actually says.
+
+#Part D — Data Frame Operations
+```{r}
+# TODO: Add a new column called year_level to students with values:
+# 2, 3, 1, 4, 2  (one per student, in the same order as the rows)
+students$year_level <- c(2, 3, 1, 4, 2)
+print(students)
+```
+```{r}
+# TODO: Sort students by age in ascending order using order()
+# Hint: students[order(students$age), ]
+students[order(students$age), ]
+```
+```{r}
+# TODO: Sort students by age in DESCENDING order
+# Hint: use order(students$age, decreasing = TRUE), or order(-students$age)
+students[order(students$age, decreasing = TRUE), ]
+```
+###Question (7)
+#Answer:No, you cannot run the filter because R will look for a column that no longer exists. Running students$passed on the modified table will return NULL, breaking the condition and yielding an empty data frame or an error. Keeping track of the table's active layout is critical because coding operations are sequential; dropping or altering a column changes the structure immediately, which will break any down-the-line commands that expect the old format.
+###Question (8)
+#Answer:The students[order(students$age), ] command rearranges the table by first scanning the age column to rank the values from lowest to highest. Instead of moving the data directly, the order() function creates a new index vector of the sorted row positions, such as c(3, 1, 5, 2, 4). This vector is then fed straight into the row slot of the data frame's square brackets [row, column]. Because the column slot after the comma is left completely blank, R pulls every single column intact but matches them to this new row sequence, cleanly reordering the entire table.
+
+#Part E — Critical Thinking Challenge
+```{r}
+grades <- data.frame(
+  name = c("Ana", "Ben", "Cid", "Dex", "Eli"),
+  midterm = c(85, 78, 92, 88, 70),
+  final = c(90, 82, 95, 84, 75)
+)
+
+# TODO: Add a new column "average" to grades that holds the mean of
+# midterm and final for each student. Hint: (grades$midterm + grades$final) / 2
+grades$average <- (grades$midterm + grades$final) / 2
+print(grades)
+
+```
+```{r}
+# TODO: Print only the rows of grades where remarks is "Failed",
+# showing just the name and average columns.
+# Hint: grades[grades$remarks == "Failed", c("name", "average")]
+grades$remarks <- ifelse(grades$average >= 80, "Passed", "Failed")
+grades[grades$remarks == "Failed", c("name", "average")]
+```
+###Question (9)
+#Answer:To investigate this, I would first create a new column called score_drop by subtracting the final grade from the midterm grade to measure how much each student's performance changed. Next, I would subset the data frame to isolate only the students who failed. Finally, I would sort this failed subset by their midterm scores to check if they were consistently low from the start, and then sort by score_drop to see if a massive point drop was the main reason they failed.
+
+###Conclusion
+
+#Answer:A data frame is a two-dimensional, table-like grid in R where columns represent variables and rows represent individual observations. It is fundamentally structured as a list of equal-length vectors, allowing each column to hold a completely different data type (like text, numbers, or logic) while keeping the overall grid aligned. Because real-world datasets naturally mix different types of information across matching sets of items, this flexible hybrid layout makes the data frame R's absolute primary tool for importing, managing, and analyzing actual spreadsheets and data tables.
+
+
+
