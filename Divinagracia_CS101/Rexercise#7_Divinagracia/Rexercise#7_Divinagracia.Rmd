@@ -22,38 +22,69 @@ knitr::opts_chunk$set(echo = TRUE)
 # Print the resulting data frame
 ```
 #a.Describe the data. Get the structure or the summary of the data.
-#Answer:
+#Answer:str(results)
+summary(results)
 #b.Check for the dimensions. How many rows and columns?
-#Answer:
+#Answer:dim(results)
+nrow(results)
+ncol(results)
+
 #c.Create factors for Sex, Father's Occupation and Types of Houses
-#Answer:
+#Answer:sex <- factor (sex,
+        levels = c(1, 2),
+        labels = c("Male", "Female"))
+
+f_occ <- factor (f_occ,
+        levels = c(1, 2, 3),
+        labels = c("Farmer", "Driver","Others"))
+
+h_type <- factor (h_type,
+        levels = c(1, 2, 3),
+        labels = c("Wood", "Semi-COncrete","COncrete"))
+table(sex)
+table(f_occ)
+table(h_type)
+
 #d.Get the mean for all columns.
-#Answer:
+#Answer:colMeans(results)
+
 #e.Extract the 1st five rows and then all the columns using subsetting functions. What is the output?
-#Answer:
+#Answer:results[1:5,]
+
 #f.Select the variable types of houses then store the vector that results as types_houses.
-#Answer:
+#Answer:types_houses <- results$H_type
+types_houses
+
 #g.Select only all Males respondent that their father occupation was farmer.
-#Answer:
+#Answer:results[results$Sex == "Male" & results$F_occ == "Farmer", ]
+
 #h.Select only all females respondent that have greater than or equal to 5 number of siblings attending school.
-#Answer:
+#Answer:results[results$Sex == "Female" & results$S_school >= 5, ]
 
 
 ###Question (2)
-#Answer:
+#Answer:To ensure that the data given was correct and to avoid errors such as missing data, and avoid shifting the wrong data to the respondent
 
 
 ###Question (3)
-#Answer:
+#Answer:Sex, Father's Occupation, and Type of House are categorical data where numbers act only as group labels. Persons at Home and Siblings at School are real numerical counts. Because labels carry no mathematical value, averaging a category like Sex is meaningless.
 
 ###Question (4)
-#Answer:
+#Answer:Filtering by Sex == 1 only displays the digit 1, which means nothing to a reader who lacks access to the legend. This demonstrates that coded data relies entirely on descriptive labels to convey meaning.
 
 ###Question (5)
 #Answer:
+```{r}
+sum(survey$Sex == 1)
+#The data has 3 males that can be found. Because the sample is only 20 people, and 
+#just 3 of them are male, a single respondent can shift the pattern noticeably. 
+#So I'm not confident applying these findings to a larger population.
+```
 
 ###Question (6)
 #Answer:
+#R picks the type of summary based on how a column is stored, not on what the values represent. #Since they're are saved as plain numbers, R reports min, mean, and max for them. 
+#This shows that how data is stored can differ.
 
 ###Question (7)
-#Answer:
+#Answer:#The mean of PersonsAtHome is worth reporting because it reflects a real count of people. The mean #of Sex isn’t, since it averages group labels. For Sex, the right summary is a count or percentage.
