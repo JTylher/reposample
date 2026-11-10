@@ -1,0 +1,111 @@
+---
+title: "Rexercise#8_Divinagracia"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Question #1
+```{r}
+#a.
+scores <- c("Ana" = 78,"Ben" = 92,"Cid" = 85,"Dex" = 92, "Eli" = 67, "Fay" = 88, "Gio" = 74)
+
+#b.
+sort(scores)
+sort(scores, decreasing = TRUE)
+
+#c.
+print(sort(scores))
+
+#d.
+subjects <- c("Science", "Math", "English", "Filipino", "PE") 
+incomplete <- c(85, NA, 90, 70, NA, 95)
+sort(subjects)
+sort(incomplete, na.last = TRUE)
+```
+Question #2
+```{r}
+# Because names are linked directly to their scores, sorting simply reorganizes the vector records. 
+# If the names do not move alongside the values, it will misalign the data and assign incorrect scores to the students.
+```
+
+Question #3
+```{r}
+# Missing values (NA) are risky due to their inherent ambiguity. Simply placing NA at the bottom 
+# can be misleading, as the missing score could theoretically be lower than any of the recorded entries.
+```
+
+Question #4
+```{r}
+order(scores) 
+sort(scores)
+#order() returns the index position, while sort() returns the rearranged values
+
+#a.
+#Yes they do. Order() gives the position of a score in a sorted order.
+```
+
+Question #5
+```{r}
+students <- data.frame(
+name = c("Ana", "Ben", "Cid", "Dex", "Eli", "Fay", "Gio"),
+score = c(78, 92, 85, 92, 67, 88, 74),
+section = c("A", "B", "A", "B", "A", "B", "A")
+)
+
+#a.
+students[order(students$score), ]
+
+#b.
+students[order(students$score, decreasing = TRUE), ]
+```
+
+Question #6
+```{r}
+sort(scores) 
+scores[order(scores)]
+
+# Running order(scores) outputs the indexing sequence required to achieve an ascending sort, rather than 
+# the values themselves. Consequently, the raw vector output isn't useful alone; it must be used as an 
+# index—such as scores[order(scores)]—to successfully arrange data vectors or data frames.
+```
+
+Question #7
+```{r}
+#sort() returns only sorted values and loses their original positions, so it can't reorder a data #frame without scrambling the rows. Order() returns positions, so students[order(students$score), ] #moves every row as a unit and keeps all columns lined up.
+```
+
+Question #8
+```{r}
+rank(scores)
+cbind(scores, rank(scores))
+
+#a.
+rank(scores[c(2,4)])
+
+#b.
+#When values tie, `rank()` gives each the average of the positions they share, so Ben and Dex  
+#both get 1.5 instead of 1 or 2.
+```
+
+Question #9
+```{r}
+#a.
+sales <- data.frame( 
+  employee = c("Rey", "Sam", "Tin", "Uma", "Val"), 
+  units_sold = c(120, 145, 145, 98, 130))
+
+sales$rank <- rank(-sales$units_sold)
+sales
+
+#b.
+sales[order(sales$units_sold, decreasing = TRUE), ]
+```
+
+Question #10
+```{r}
+# Yes, the order() function can handle both sorting and indexing tasks seamlessly if there are no ties. 
+# However, unlike rank(), order() forces a strict sequential line and cannot natively recognize or 
+# handle tied values with equal standing.```
