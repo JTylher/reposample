@@ -1,0 +1,96 @@
+---
+title: "Rexercise#9_Divinagracia"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Question #1
+```{r}
+#a.
+S_Size <- c(6.5, 9.0, 8.5, 8.5, 10.5, 7.0, 9.5, 9.0, 13.0, 7.5, 10.5, 8.5, 12.0, 10.5,
+13.0, 11.5, 8.5, 5.0, 10.0, 6.5, 7.5, 8.5, 10.5, 8.5, 10.5, 11.0, 9.0, 13.0)
+Height <- c(66.0, 68.0, 64.5, 65.0, 70.0, 64.0, 70.0, 71.0, 72.0, 64.0, 74.5, 67.0, 71.0, 71.0,
+77.0, 72.0, 59.0, 62.0, 72.0, 66.0, 64.0, 67.0, 73.0, 69.0, 72.0, 70.0, 69.0, 70.0)
+Gender <- c("F", "F", "F", "F", "M", "F", "F", "F", "M", "F", "M", "F", "M", "M",
+"M", "M", "F", "F", "M", "F", "F", "M", "M", "F", "M", "M", "M", "M")
+
+shoesize <- data.frame(S_size = S_Size, Height = Height, Gender = Gender)
+write.csv(shoesize, "shoesize.csv", row.names = FALSE)
+
+#b.
+shoe <-read.csv("shoesize.csv")
+tail(shoe,5)
+
+#c.
+str(shoe)
+
+#d.
+dim(shoe)
+nrow(shoe)
+ncol(shoe)
+
+#e.
+summary(shoe)
+# str() shows the structure of the data like rows and columns. 
+# summary() gives statistical details like the min, mean, and median.
+
+#f.
+males   <- shoe[shoe$Gender == "M", c("S_size", "Height")]
+females <- shoe[shoe$Gender == "F", c("S_size", "Height")]
+males
+females
+
+#g.
+mean(shoe$S_size)
+mean(shoe$Height)
+
+#h.
+#Yes,taller people tend to have larger shoe sizes.
+
+
+#Question 2
+gender <- factor(Gender, levels = c("F", "M"), labels = c("Female", "Male"))
+Gender
+```
+
+Question #3
+```{r}
+# Knitting runs from the folder where the .Rmd file is saved, making file paths relative. 
+# This means the code will work for anyone as long as the CSV is kept next to the .Rmd file, 
+# preventing broken computer-specific paths.```
+
+Question #4
+```{r}
+str(shoe)
+# Gender imports as text (chr) because read.csv() does not automatically turn text into factors. 
+# If a column like S_size imports as text by mistake, mean() will return NA, sorting will be alphabetical, 
+# and plots will fail, meaning you have to fix the text and convert it using as.numeric().```
+
+Question #5
+```{r}
+# Checking tail() can show blank rows, typos at the bottom, or an incomplete final row. 
+# You cannot spot these issues if you only look at the top using head().
+```
+
+Question #6
+```{r}
+#a.
+cor(shoe$S_size, shoe$Height)
+
+#b.
+shoe[shoe$S_size >= 11, ]
+```
+
+Question #7
+```{r}
+mean(females$Height)
+mean(males$Height)
+mean(females$S_size)
+mean(males$S_size)
+
+# On average, males are taller and have larger shoe sizes than females. 
+# This supports the idea that height and shoe size are linked, and shows that gender 
+# should be considered when looking at this relationship.
+```
