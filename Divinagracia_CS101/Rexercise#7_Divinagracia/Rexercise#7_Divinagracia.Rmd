@@ -6,85 +6,131 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-###R Lab: Data Structures - Data Frames
 
-#Part A — Creating Data Frames
-#Question(1)
+### R Lab: Data Structures - Data Frames
+
+## Part A — Creating Data Frames
+
+### Question (1)
 ```{r}
-# TODO: Before combining these into a data frame, confirm all six vectors
-# have the same length using length() on each one (or wrap them in c()
-# and check for yourself that every value is 20)
+respondents <- 1:20
+sex <- c(2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2)
+fathers_occupation <- c(1, 3, 3, 3, 1, 2, 3, 1, 1, 1, 3, 2, 1, 3, 3, 1, 3, 1, 2, 1)
+persons_at_home <- c(5, 7, 3, 8, 5, 9, 6, 7, 8, 4, 7, 5, 4, 7, 8, 8, 3, 11, 7, 6)
+siblings_at_school <- c(6, 4, 4, 1, 2, 1, 5, 3, 1, 2, 3, 2, 5, 5, 2, 1, 2, 5, 3, 2)
+types_of_houses <- c(1, 2, 3, 1, 1, 3, 3, 1, 2, 3, 2, 3, 2, 2, 3, 3, 3, 3, 3, 2)
+
+# Confirm all six vectors have the same length (each should be 20)
+length(respondents)
+length(sex)
+length(fathers_occupation)
+length(persons_at_home)
+length(siblings_at_school)
+length(types_of_houses)
+
 ```
+
 ```{r}
-# TODO: Combine all six vectors into a data frame called survey using
-# data.frame(), naming the columns: Respondent, Sex, FathersOccupation,
-# PersonsAtHome, SiblingsAtSchool, TypesOfHouses
-# Print the resulting data frame
+survey <- data.frame(
+  Respondent = respondents,
+  Sex = sex,
+  FathersOccupation = fathers_occupation,
+  PersonsAtHome = persons_at_home,
+  SiblingsAtSchool = siblings_at_school,
+  TypesOfHouses = types_of_houses
+)
+survey
 ```
-#a.Describe the data. Get the structure or the summary of the data.
-#Answer:str(results)
-summary(results)
-#b.Check for the dimensions. How many rows and columns?
-#Answer:dim(results)
-nrow(results)
-ncol(results)
 
-#c.Create factors for Sex, Father's Occupation and Types of Houses
-#Answer:sex <- factor (sex,
-        levels = c(1, 2),
-        labels = c("Male", "Female"))
+#### a. Describe the data (structure and summary)
 
-f_occ <- factor (f_occ,
-        levels = c(1, 2, 3),
-        labels = c("Farmer", "Driver","Others"))
+```{r}
+str(survey)
+summary(survey)
+```
 
-h_type <- factor (h_type,
-        levels = c(1, 2, 3),
-        labels = c("Wood", "Semi-COncrete","COncrete"))
-table(sex)
-table(f_occ)
-table(h_type)
+#### b. Dimensions (rows and columns)
 
-#d.Get the mean for all columns.
-#Answer:colMeans(results)
+```{r}
+dim(survey)
+nrow(survey)
+ncol(survey)
+```
 
-#e.Extract the 1st five rows and then all the columns using subsetting functions. What is the output?
-#Answer:results[1:5,]
+#### c. Create factors for Sex, Father's Occupation and Types of Houses
 
-#f.Select the variable types of houses then store the vector that results as types_houses.
-#Answer:types_houses <- results$H_type
+```{r}
+survey$Sex <- factor(survey$Sex,
+                     levels = c(1, 2),
+                     labels = c("Male", "Female"))
+
+survey$FathersOccupation <- factor(survey$FathersOccupation,
+                                   levels = c(1, 2, 3),
+                                   labels = c("Farmer", "Driver", "Others"))
+
+survey$TypesOfHouses <- factor(survey$TypesOfHouses,
+                               levels = c(1, 2, 3),
+                               labels = c("Wood", "Semi-Concrete", "Concrete"))
+
+table(survey$Sex)
+table(survey$FathersOccupation)
+table(survey$TypesOfHouses)
+```
+
+#### d. Mean for all columns
+
+`colMeans()` only works on numeric data, so it is applied to the coded copy made before the factors were created.
+
+```{r}
+sapply(survey, function(x) if(is.numeric(x)) mean(x) else NA)
+```
+
+#### e. First five rows, all columns
+
+```{r}
+survey[1:5, ]
+```
+
+#### f. Select Types of Houses and store it as `types_houses`
+
+```{r}
+types_houses <- survey$TypesOfHouses
 types_houses
-
-#g.Select only all Males respondent that their father occupation was farmer.
-#Answer:results[results$Sex == "Male" & results$F_occ == "Farmer", ]
-
-#h.Select only all females respondent that have greater than or equal to 5 number of siblings attending school.
-#Answer:results[results$Sex == "Female" & results$S_school >= 5, ]
-
-
-###Question (2)
-#Answer:To ensure that the data given was correct and to avoid errors such as missing data, and avoid shifting the wrong data to the respondent
-
-
-###Question (3)
-#Answer:Sex, Father's Occupation, and Type of House are categorical data where numbers act only as group labels. Persons at Home and Siblings at School are real numerical counts. Because labels carry no mathematical value, averaging a category like Sex is meaningless.
-
-###Question (4)
-#Answer:Filtering by Sex == 1 only displays the digit 1, which means nothing to a reader who lacks access to the legend. This demonstrates that coded data relies entirely on descriptive labels to convey meaning.
-
-###Question (5)
-#Answer:
-```{r}
-sum(survey$Sex == 1)
-#The data has 3 males that can be found. Because the sample is only 20 people, and 
-#just 3 of them are male, a single respondent can shift the pattern noticeably. 
-#So I'm not confident applying these findings to a larger population.
 ```
 
-###Question (6)
-#Answer:
-#R picks the type of summary based on how a column is stored, not on what the values represent. #Since they're are saved as plain numbers, R reports min, mean, and max for them. 
-#This shows that how data is stored can differ.
+#### g. Male respondents whose father's occupation is Farmer
 
-###Question (7)
-#Answer:#The mean of PersonsAtHome is worth reporting because it reflects a real count of people. The mean #of Sex isn’t, since it averages group labels. For Sex, the right summary is a count or percentage.
+```{r}
+survey[survey$Sex == "Male" & survey$FathersOccupation == "Farmer", ]
+```
+
+#### h. Female respondents with 5 or more siblings attending school
+
+```{r}
+survey[survey$Sex == "Female" & survey$SiblingsAtSchool >= 5, ]
+```
+
+### Question (2)
+#Answer:To make sure the data entered is correct, avoid errors such as missing values, and avoid assigning data to the wrong respondent.
+
+### Question (3)
+#Answer:Sex, Father's Occupation, and Types of Houses are categorical data, where the numbers act only as group labels. Persons at Home and Siblings at School are true numerical counts. Because labels carry no mathematical value, averaging a category like Sex is meaningless.
+
+### Question (4)
+#Answer: Filtering by `Sex == 1` only shows the digit 1, which means nothing to a reader who lacks the legend. This shows that coded data relies on descriptive labels to convey meaning.
+
+### Question (5)
+
+```{r}
+nrow(survey[survey$Sex == "Male", ])
+sum(survey$Sex == "Male")
+```
+
+#Answer:The data has 3 males. Because the sample is only 20 people and just 3 are male, a single respondent can shift the pattern noticeably, so I am not confident applying these findings to a larger population.
+
+### Question (6)
+
+#Answer: R chooses the type of summary based on how a column is stored, not on what the values represent. Since the coded columns are saved as plain numbers, R reports min, mean, and max for them. This shows that how data is stored can differ from what it means.
+
+### Question (7)
+#Answer: The mean of PersonsAtHome is worth reporting because it reflects a real count of people. The mean of Sex is not, since it averages group labels. For Sex, the right summary is a count or percentage.
